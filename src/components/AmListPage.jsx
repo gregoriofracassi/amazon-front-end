@@ -1,26 +1,27 @@
-import { Component } from "react";
+import { Component } from "react"
 // import { Link } from "react-router-dom";
-import "./AmListPageStyle.css";
-import { Container, Row, Col } from "react-bootstrap";
-import Card from "react-bootstrap/Card";
+import "./AmListPageStyle.css"
+import { Container, Row, Col } from "react-bootstrap"
+import Card from "react-bootstrap/Card"
 // import CardColumns from "react-bootstrap/CardColumns";
-import Button from "react-bootstrap/Button";
+import Button from "react-bootstrap/Button"
 
 class AmazonListPage extends Component {
   state = {
     products: [],
-  };
+  }
 
   componentDidMount = async () => {
     try {
-      let myFetch = await fetch("https://striveschool-api.herokuapp.com/books");
-      let myFetchJson = await myFetch.json();
-      this.setState = { products: myFetchJson };
-      console.log(myFetchJson);
+      let myFetch = await fetch("https://striveschool-api.herokuapp.com/books")
+      let myFetchJson = await myFetch.json()
+      console.log(myFetchJson)
+      this.setState({ products: myFetchJson })
+      console.log(myFetchJson)
     } catch (error) {
-      alert("An error occured :( ");
+      alert("An error occured :( ")
     }
-  };
+  }
 
   render() {
     return (
@@ -41,13 +42,13 @@ class AmazonListPage extends Component {
                     </Card.Body>
                   </Card>
                 </Col>
-              );
+              )
             })}
           </Row>
         </Container>
       </main>
-    );
+    )
   }
 }
 
-export default AmazonListPage;
+export default AmazonListPage

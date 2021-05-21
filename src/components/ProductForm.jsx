@@ -7,10 +7,14 @@ class ProductForm extends React.Component {
     product: {},
   }
 
-  onSubmit = (action) => {
+  onSubmit = async (action) => {
     e.preventDefault()
+
+    const endpoint = action === 'POST' 
+    ? `http://localhost:3001/products` : `http://localhost:3001/products/${this.props.match.params.id}`
+
     try {
-      const response = await fetch(`http://localhost:3001/products`, {
+      const response = await fetch(, {
         method: action,
         headers: {
           "Content-Type": "application/json",

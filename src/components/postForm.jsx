@@ -1,12 +1,13 @@
 import React from "react"
 import { Form, Container, Row, Col, Button } from "react-bootstrap"
+import "../PostForm.css"
 
 class PostForm extends React.Component {
   state = {}
 
   render() {
     return (
-      <Container>
+      <Container className="pad-top">
         <Row>
           <Col xs={{ offset: 3, span: 6 }}>
             <Form>

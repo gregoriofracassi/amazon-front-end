@@ -3,7 +3,39 @@ import { Form, Container, Row, Col, Button } from "react-bootstrap"
 import "../PostForm.css"
 
 class ProductForm extends React.Component {
-  state = {}
+  state = {
+    product: {},
+  }
+
+  onSubmit = (action) => {
+    e.preventDefault()
+    try {
+      const response = await fetch(`http://localhost:3001/products`, {
+        method: action,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(this.state.product),
+      })
+      if (response.ok) {
+        const data = await response.json()
+        console.log(data)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  handleChange = (e) => {
+    const id = e.target.id
+    id === "price"
+      ? this.setState({
+          product: { ...this.state.product, [id]: parseInt(e.target.value) },
+        })
+      : this.setState({
+          product: { ...this.state.product, [id]: e.target.value },
+        })
+  }
 
   render() {
     return (
@@ -17,11 +49,19 @@ class ProductForm extends React.Component {
                   type="text"
                   id="name"
                   placeholder="insert your product's name..."
+                  value={this.state.product.name}
+                  onChange={this.handleChange}
                 />
               </Form.Group>
               <Form.Group>
                 <Form.Label>Product Description</Form.Label>
-                <Form.Control as="textarea" id="description" rows={3} />
+                <Form.Control
+                  as="textarea"
+                  id="description"
+                  rows={3}
+                  value={this.state.product.description}
+                  onChange={this.handleChange}
+                />
               </Form.Group>
               <Form.Group>
                 <Form.Label>Product Brand</Form.Label>
@@ -29,6 +69,8 @@ class ProductForm extends React.Component {
                   type="text"
                   id="brand"
                   placeholder="insert your product's brand..."
+                  value={this.state.product.brand}
+                  onChange={this.handleChange}
                 />
               </Form.Group>
               <Form.Group>
@@ -37,6 +79,8 @@ class ProductForm extends React.Component {
                   type="text"
                   id="imageUrl"
                   placeholder="insert your image's url..."
+                  value={this.state.product.imageUrl}
+                  onChange={this.handleChange}
                 />
               </Form.Group>
               <Form.Group>
@@ -45,6 +89,8 @@ class ProductForm extends React.Component {
                   type="number"
                   id="price"
                   placeholder="insert your price in €..."
+                  value={this.state.product.price}
+                  onChange={this.handleChange}
                 />
               </Form.Group>
               <Form.Group>
@@ -53,6 +99,8 @@ class ProductForm extends React.Component {
                   type="text"
                   id="category"
                   placeholder="insert your product's category..."
+                  value={this.state.product.category}
+                  onChange={this.handleChange}
                 />
               </Form.Group>
               <hr />

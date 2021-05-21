@@ -8,7 +8,16 @@ const App = () => {
   return (
     <Router>
       <Header />
-      <Route exact path="/addProduct" component={ProductForm} />
+      <Route
+        path="/addProduct"
+        exact
+        render={(props) => <ProductForm formType="add" {...props} />}
+      />
+      <Route
+        path="/editProduct"
+        exact
+        render={(props) => <ProductForm formType="edit" {...props} />}
+      />
     </Router>
   )
 }

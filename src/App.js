@@ -1,8 +1,8 @@
-import React from "react"
-import "./App.css"
-import { BrowserRouter as Router, Route } from "react-router-dom"
-import ProductForm from "./components/ProductForm"
-import Header from "./components/Header"
+import React from "react";
+import "./App.css";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import ProductForm from "./components/ProductForm";
+import Header from "./components/Header";
 
 const App = () => {
   return (
@@ -19,7 +19,7 @@ const App = () => {
         render={(props) => <ProductForm formType="edit" {...props} />}
       />
     </Router>
-  )
-}
+  );
+};
 
-export default App
+export default App;

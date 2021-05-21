@@ -1,0 +1,22 @@
+/* body {
+  background: linear-gradient();
+} */
+.MyTestNav {
+  background-color: #131921;
+}
+
+#MyNavBrand {
+  color: #f0c14b;
+  font-weight: bold;
+}
+
+h2 {
+  font-family: Arial, sans-serif;
+}
+
+a,
+a:link,
+a:visited {
+  color: whitesmoke;
+  text-decoration: none; /*!important*/
+}

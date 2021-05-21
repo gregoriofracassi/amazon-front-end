@@ -7,19 +7,36 @@ class ProductForm extends React.Component {
     product: {},
   }
 
-  onSubmit = async (action) => {
-    e.preventDefault()
+  handleSubmit = (action) => {
+    return async (e) => {
+      e.preventDefault()
+      const endpoint =
+        action === "POST"
+          ? `http://localhost:3001/products`
+          : `http://localhost:3001/products/${this.props.match.params.id}`
+      try {
+        const response = await fetch(endpoint, {
+          method: action,
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(this.state.product),
+        })
+        if (response.ok) {
+          const data = await response.json()
+          console.log(data)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
 
-    const endpoint = action === 'POST' 
-    ? `http://localhost:3001/products` : `http://localhost:3001/products/${this.props.match.params.id}`
-
+  handleDelete = async () => {
+    const endpoint = `http://localhost:3001/products/${this.props.match.params.id}`
     try {
-      const response = await fetch(, {
-        method: action,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(this.state.product),
+      const response = await fetch(endpoint, {
+        method: "DELETE",
       })
       if (response.ok) {
         const data = await response.json()
@@ -41,12 +58,23 @@ class ProductForm extends React.Component {
         })
   }
 
+  selectImage = (e) => {
+    e.preventDefault()
+    console.log(e.target.files[0])
+    const file = e.target.files[0]
+    let formData = new FormData()
+    formData.append("productImg", file)
+    this.setState({
+      product: { ...this.state.product, image: formData },
+    })
+  }
+
   render() {
     return (
       <Container className="pad-top">
         <Row>
           <Col xs={{ offset: 3, span: 6 }}>
-            <Form>
+            <Form onSubmit={() => this.handleSubmit(this.props.action)}>
               <Form.Group>
                 <Form.Label>Product Name</Form.Label>
                 <Form.Control
@@ -77,16 +105,15 @@ class ProductForm extends React.Component {
                   onChange={this.handleChange}
                 />
               </Form.Group>
-              <Form.Group>
-                <Form.Label>Image</Form.Label>
-                <Form.Control
-                  type="text"
-                  id="imageUrl"
-                  placeholder="insert your image's url..."
-                  value={this.state.product.imageUrl}
-                  onChange={this.handleChange}
-                />
-              </Form.Group>
+              <div className="my-2">
+                <p className="mb-1">Product Cover Image</p>
+                <Form.Group>
+                  <Form.File
+                    id="exampleFormControlFile1"
+                    onChange={this.selectImage}
+                  />
+                </Form.Group>
+              </div>
               <Form.Group>
                 <Form.Label>Price</Form.Label>
                 <Form.Control
@@ -118,7 +145,11 @@ class ProductForm extends React.Component {
                   <Button variant="warning" type="submit">
                     Edit Product
                   </Button>
-                  <Button variant="secondary" type="submit">
+                  <Button
+                    variant="secondary"
+                    type="button"
+                    onClick={this.handleDelete}
+                  >
                     Delete Product
                   </Button>
                 </div>

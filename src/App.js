@@ -14,7 +14,7 @@ const App = () => {
         render={(props) => <ProductForm formType="add" {...props} />}
       />
       <Route
-        path="/editProduct"
+        path="/editProduct/:id"
         exact
         render={(props) => <ProductForm formType="edit" {...props} />}
       />

@@ -2,7 +2,7 @@ import React from "react"
 import { Form, Container, Row, Col, Button } from "react-bootstrap"
 import "../PostForm.css"
 
-class PostForm extends React.Component {
+class ProductForm extends React.Component {
   state = {}
 
   render() {
@@ -56,9 +56,21 @@ class PostForm extends React.Component {
                 />
               </Form.Group>
               <hr />
-              <Button variant="warning" type="submit">
-                Add Product
-              </Button>
+              {this.props.formType === "add" && (
+                <Button variant="warning" type="submit">
+                  Add Product
+                </Button>
+              )}
+              {this.props.formType === "edit" && (
+                <div className="d-flex justify-content-between">
+                  <Button variant="warning" type="submit">
+                    Edit Product
+                  </Button>
+                  <Button variant="secondary" type="submit">
+                    Delete Product
+                  </Button>
+                </div>
+              )}
             </Form>
           </Col>
         </Row>
@@ -67,4 +79,4 @@ class PostForm extends React.Component {
   }
 }
 
-export default PostForm
+export default ProductForm

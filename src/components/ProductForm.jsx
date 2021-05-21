@@ -5,6 +5,7 @@ import "../PostForm.css"
 class ProductForm extends React.Component {
   state = {
     product: {},
+    image: null,
   }
 
   handleSubmit = (action) => {
@@ -25,6 +26,20 @@ class ProductForm extends React.Component {
         if (response.ok) {
           const data = await response.json()
           console.log(data)
+          // const productId = data.id
+          // if (this.state.image) {
+          //   const imageRes = await fetch(
+          //     `http://localhost:3001/product/${productId}/upload`,
+          //     {
+          //       method: "POST",
+          //       body: this.state.image,
+          //     }
+          //   )
+          //   if (imageRes.ok) {
+          //     const imgData = await imageRes.json()
+          //     console.log(imgData)
+          //   }
+          // }
         }
       } catch (error) {
         console.log(error)
@@ -64,9 +79,7 @@ class ProductForm extends React.Component {
     const file = e.target.files[0]
     let formData = new FormData()
     formData.append("productImg", file)
-    this.setState({
-      product: { ...this.state.product, image: formData },
-    })
+    this.setState({ image: formData })
   }
 
   render() {

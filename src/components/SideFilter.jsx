@@ -9,6 +9,8 @@ class SideFilter extends Component {
     category: "",
     minPrice: "",
     maxPrice: "",
+    uniqueBrands: [],
+    uniqueCategories: [],
   };
 
   handleChange = (e) => {
@@ -49,6 +51,34 @@ class SideFilter extends Component {
     const queryString = query.join("&");
     this.props.history.push(this.props.match.path + `products?${queryString}`);
   };
+
+  componentDidUpdate(prevProps, preState) {
+    if (prevProps.products !== this.props.products) {
+      const products = this.props.products;
+
+      let brands = [];
+      let categories = [];
+
+      products.forEach((elem) => {
+        brands.push(elem.brand);
+        categories.push(elem.category);
+      });
+      console.log(brands, categories);
+
+      let uniqueSetBrands = new Set(brands);
+      let uniqueBrands = [...uniqueSetBrands];
+      this.setState({
+        uniqueBrands,
+      });
+
+      let uniqueSetCategories = new Set(categories);
+      let uniqueCategories = [...uniqueSetCategories];
+      this.setState({
+        uniqueCategories,
+      });
+    }
+  }
+
   render() {
     return (
       <div>
@@ -62,10 +92,9 @@ class SideFilter extends Component {
               value={this.state.category}
               onChange={(e) => this.handleChange(e)}>
               <option></option>
-              <option>mobile</option>
-              <option>books</option>
-              <option>tablet</option>
-              <option>cloth</option>
+              {this.state.uniqueCategories.map((elem) => {
+                return <option>{elem}</option>;
+              })}
             </Form.Control>
           </Form.Group>
           <Form.Group className='mt-3'>
@@ -77,11 +106,9 @@ class SideFilter extends Component {
               value={this.state.brand}
               onChange={(e) => this.handleChange(e)}>
               <option></option>
-              <option>iphone</option>
-              <option>samsung</option>
-              <option>nokia</option>
-              <option>sony</option>
-              <option>Booker</option>
+              {this.state.uniqueBrands.map((elem) => {
+                return <option>{elem}</option>;
+              })}
             </Form.Control>
           </Form.Group>
 

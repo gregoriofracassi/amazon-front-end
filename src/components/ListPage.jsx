@@ -13,7 +13,7 @@ class ListPage extends React.Component {
       if (response.ok) {
         let data = await response.json()
         console.log(data)
-        this.setState({ products: data })
+        this.setState({ products: data.products })
         console.log(this.state.products)
       }
     } catch (error) {

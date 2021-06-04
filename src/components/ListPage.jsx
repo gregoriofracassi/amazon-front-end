@@ -31,7 +31,7 @@ class ListPage extends React.Component {
               return (
                 <Container
                   key={p._id}
-                  className="pointer"
+                  className="pointer my-2"
                   onClick={() => this.props.history.push(`/product/${p._id}`)}
                 >
                   <Row>
@@ -43,8 +43,8 @@ class ListPage extends React.Component {
                       <p>{p.description}</p>
                       <h4>{p.price}</h4>
                     </Col>
-                    <hr className="my-3"></hr>
                   </Row>
+                  <hr></hr>
                 </Container>
               )
             })}

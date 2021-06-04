@@ -1,37 +1,39 @@
 import React from "react"
-import { Container, Row, Col } from "react-bootstrap"
-
+import { Container, Row, Col, Pagination } from "react-bootstrap"
+import { Link, withRouter } from "react-router-dom"
+import SideFilter from "./SideFilter"
 class ListPage extends React.Component {
-  state = {
-    products: [],
-  }
-
-  componentDidMount = async () => {
-    try {
-      let response = await fetch("http://localhost:3001/products")
-
-      if (response.ok) {
-        let data = await response.json()
-        console.log(data)
-        this.setState({ products: data.products })
-        console.log(this.state.products)
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
   render() {
+    const count = this.props.products.length
+    const items = []
+    let active = 2
+
+    for (let number = 1; number <= count / 6; number++) {
+      items.push(
+        <Pagination.Item
+          key={number}
+          active={number === active}
+          as={Link}
+          to="/products/"
+        >
+          {number}
+        </Pagination.Item>
+      )
+    }
+
     return (
       <Container className="mt-4">
         <Row>
-          <Col xs={2}></Col>
+          <Col xs={2}>
+            <SideFilter products={this.props.products} />
+          </Col>
+
           <Col xs={10}>
-            {this.state.products.map((p) => {
+            {this.props.products.map((p) => {
               return (
                 <Container
                   key={p._id}
-                  className="pointer my-2"
+                  className="pointer"
                   onClick={() => this.props.history.push(`/product/${p._id}`)}
                 >
                   <Row>
@@ -43,6 +45,7 @@ class ListPage extends React.Component {
                       <p>{p.description}</p>
                       <h4>{p.price}</h4>
                     </Col>
+                    <hr className="my-3"></hr>
                   </Row>
                   <hr></hr>
                 </Container>
@@ -50,9 +53,10 @@ class ListPage extends React.Component {
             })}
           </Col>
         </Row>
+        <Pagination>{items}</Pagination>
       </Container>
     )
   }
 }
 
-export default ListPage
+export default withRouter(ListPage)

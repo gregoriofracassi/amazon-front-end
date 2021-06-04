@@ -44,3 +44,7 @@
 .pointer {
   cursor: pointer;
 }
+
+.no-mb {
+  margin-bottom: 0px;
+}

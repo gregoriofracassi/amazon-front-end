@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Row, Col, Pagination } from "react-bootstrap";
 import { Link, withRouter } from "react-router-dom";
+import SideFilter from "./SideFilter";
 class ListPage extends React.Component {
   render() {
     const count = this.props.products.length;
@@ -23,7 +24,7 @@ class ListPage extends React.Component {
       <Container className='mt-4'>
         <Row>
           <Col xs={2}>
-            <SideFilter products={this.state.products} />
+            <SideFilter products={this.props.products} />
           </Col>
 
           <Col xs={10}>

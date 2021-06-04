@@ -6,11 +6,15 @@ import { Link, withRouter } from "react-router-dom";
 
 function Header(props) {
   const handleChange = (e) => {
+    const search = props.location.search;
     if (e.target.value.length > 0 && e.target.value.length) {
       props.onQueryChange(e.target.value);
-      props.history.push(
-        props.match.path + `?query=${e.target.value}&offset=0&limit=6`
-      );
+      if (search) {
+        console.log("props.location.search:", props.location.search);
+        props.history.push(search + `&query=${e.target.value}`);
+      } else {
+        props.history.push(props.match.path + `?query=${e.target.value}`);
+      }
     } else {
       props.history.push(props.match.path);
       props.onQueryChange(e.target.value);

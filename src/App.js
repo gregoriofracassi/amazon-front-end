@@ -15,19 +15,20 @@ const App = (props) => {
   useEffect( async () => {
      try {
         const api = process.env.REACT_APP_BE_URL
-        const res = await fetch(api + `/products${props.location.search}?&limit=10`)
+        const res = await fetch(api + `/products${props.location.search}`)
         if(!res.ok) throw new Error("ProductFetch failed")
         let data = await res.json()
         setProducts(data.products)
      } catch (error) {
         console.log(error)
      }
-  },[query])
+  },[query, props])
+
 
   return (
   <>
       <Header onQueryChange={(query) => setQuery(query)} searchWord={query}/>
-      <Route exact path="/" render={(state)=> <ListPage products={products}/>} />
+      <Route path="/" render={(state)=> <ListPage products={products}/>} />
       <Route path="/product/:id" component={ProductPage} />
       <Route
         path="/addProduct"

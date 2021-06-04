@@ -8,42 +8,73 @@ class ProductForm extends React.Component {
     image: null,
   }
 
-  handleSubmit = (action) => {
-    return async (e) => {
-      e.preventDefault()
-      const endpoint =
-        action === "POST"
-          ? `http://localhost:3001/products`
-          : `http://localhost:3001/products/${this.props.match.params.id}`
-      try {
-        const response = await fetch(endpoint, {
-          method: action,
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(this.state.product),
-        })
-        if (response.ok) {
-          const data = await response.json()
-          console.log(data)
-          // const productId = data.id
-          // if (this.state.image) {
-          //   const imageRes = await fetch(
-          //     `http://localhost:3001/product/${productId}/upload`,
-          //     {
-          //       method: "POST",
-          //       body: this.state.image,
-          //     }
-          //   )
-          //   if (imageRes.ok) {
-          //     const imgData = await imageRes.json()
-          //     console.log(imgData)
-          //   }
-          // }
+  handlePost = async (e) => {
+    console.log("submitting")
+    e.preventDefault()
+    const endpoint = `http://localhost:3001/products`
+    try {
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(this.state.product),
+      })
+      if (response.ok) {
+        const data = await response.json()
+        console.log(data)
+        const productId = data.id
+        if (this.state.image) {
+          const imageRes = await fetch(
+            `http://localhost:3001/products/${productId}/imageupload`,
+            {
+              method: "POST",
+              body: this.state.image,
+            }
+          )
+          if (imageRes.ok) {
+            const imgData = await imageRes.json()
+            console.log(imgData)
+          }
         }
-      } catch (error) {
-        console.log(error)
       }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  handlePut = async (e) => {
+    console.log("putting")
+    e.preventDefault()
+    const endpoint = `http://localhost:3001/products/${this.props.match.params.id}`
+    try {
+      const response = await fetch(endpoint, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(this.state.product),
+      })
+      if (response.ok) {
+        const data = await response.json()
+        console.log(data)
+        const productId = data.id
+        if (this.state.image) {
+          const imageRes = await fetch(
+            `http://localhost:3001/products/${this.props.match.params.id}/imageupload`,
+            {
+              method: "POST",
+              body: this.state.image,
+            }
+          )
+          if (imageRes.ok) {
+            const imgData = await imageRes.json()
+            console.log(imgData)
+          }
+        }
+      }
+    } catch (error) {
+      console.log(error)
     }
   }
 
@@ -78,7 +109,7 @@ class ProductForm extends React.Component {
     console.log(e.target.files[0])
     const file = e.target.files[0]
     let formData = new FormData()
-    formData.append("productImg", file)
+    formData.append("image", file)
     this.setState({ image: formData })
   }
 
@@ -87,7 +118,7 @@ class ProductForm extends React.Component {
       <Container className="pad-top">
         <Row>
           <Col xs={{ offset: 3, span: 6 }}>
-            <Form onSubmit={() => this.handleSubmit(this.props.action)}>
+            <Form>
               <Form.Group>
                 <Form.Label>Product Name</Form.Label>
                 <Form.Control
@@ -149,13 +180,21 @@ class ProductForm extends React.Component {
               </Form.Group>
               <hr />
               {this.props.formType === "add" && (
-                <Button variant="warning" type="submit">
+                <Button
+                  variant="warning"
+                  type="button"
+                  onClick={this.handlePost}
+                >
                   Add Product
                 </Button>
               )}
               {this.props.formType === "edit" && (
                 <div className="d-flex justify-content-between">
-                  <Button variant="warning" type="submit">
+                  <Button
+                    variant="warning"
+                    type="button"
+                    onClick={this.handlePut}
+                  >
                     Edit Product
                   </Button>
                   <Button

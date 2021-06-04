@@ -36,6 +36,16 @@ class ListItem extends React.Component {
                   src={this.state.product.imageUrl}
                   alt=""
                 />
+                <div
+                  className="mt-4 pointer"
+                  onClick={() =>
+                    this.props.history.push(
+                      `/editProduct/${this.state.product._id}`
+                    )
+                  }
+                >
+                  Edit Item
+                </div>
               </Col>
               <Col xs={7}>
                 <h5>{this.state.product.name}</h5>

@@ -20,83 +20,104 @@ class SideFilter extends Component {
 
   filterSubmit = (e) => {
     e.preventDefault();
+    let query = [];
+    // this.setState((state) => {
+    //   return {
+    //     ...state,
+    //     brand: "",
+    //     category: "",
+    //     minPrice: "",
+    //     maxPrice: "",
+    //   };
+    // });
+    let priceF = "";
+    let brandF = "";
+    let catF = "";
     //?brand=fdfsdf&category=books&price<3&price>10
-    this.props.history.push(
-      this.props.match.path +
-        ` ?brand=${this.state.brand}&category=${this.state.category}&price<${this.state.maxPrice}&price>${this.state.minPrice}`
-    );
+    if (this.state.brand) {
+      brandF += `brand=${this.state.brand}`;
+      query.push(brandF);
+    }
+    if (this.state.category) {
+      catF += `category=${this.state.category}`;
+      query.push(catF);
+    }
+    if (this.state.minPrice && this.state.maxPrice) {
+      priceF += `price<${this.state.maxPrice}&price>${this.state.minPrice}`;
+      query.push(priceF);
+    }
+    const queryString = query.join("&");
+    this.props.history.push(this.props.match.path + `products?${queryString}`);
   };
   render() {
     return (
       <div>
         <Form onSubmit={(e) => this.filterSubmit(e)}>
-          <Form.Group controlId="blog-category" className="mt-3">
+          <Form.Group className='mt-3'>
             <Form.Label>Category</Form.Label>
             <Form.Control
-              size="sm"
-              as="select"
-              id="category"
+              size='sm'
+              as='select'
+              id='category'
               value={this.state.category}
-              onChange={(e) => this.handleChange(e)}
-            >
+              onChange={(e) => this.handleChange(e)}>
               <option></option>
               <option>mobile</option>
-              <option>book</option>
+              <option>books</option>
               <option>tablet</option>
               <option>cloth</option>
             </Form.Control>
           </Form.Group>
-          <Form.Group controlId="blog-category" className="mt-3">
+          <Form.Group className='mt-3'>
             <Form.Label>Brand</Form.Label>
             <Form.Control
-              size="sm"
-              as="select"
-              id="brand"
+              size='sm'
+              as='select'
+              id='brand'
               value={this.state.brand}
-              onChange={(e) => this.handleChange(e)}
-            >
+              onChange={(e) => this.handleChange(e)}>
               <option></option>
               <option>iphone</option>
               <option>samsung</option>
               <option>nokia</option>
               <option>sony</option>
+              <option>Booker</option>
             </Form.Control>
           </Form.Group>
 
           <Form.Label>Price:</Form.Label>
-          <div className="price-container">
-            <Form.Group
-              className="mb-3"
-              controlId="formBasicEmail"
-              id="priceRange1"
-            >
+          <div className='price-container'>
+            <Form.Group className='mb-3'>
               <Form.Control
-                type="text"
-                placeholder="from"
-                size="sm"
-                id="minPrice"
+                type='text'
+                placeholder='from'
+                size='sm'
+                id='minPrice'
                 value={this.state.minPrice}
                 onChange={(e) => this.handleChange(e)}
               />
             </Form.Group>
-            <Form.Group
-              className="mb-3"
-              controlId="formBasicEmail"
-              id="priceRange2"
-            >
+            <Form.Group className='mb-3'>
               <Form.Control
-                type="text"
-                placeholder="to"
-                size="sm"
-                id="maxPrice"
+                type='text'
+                placeholder='to'
+                size='sm'
+                id='maxPrice'
                 value={this.state.maxPrice}
                 onChange={(e) => this.handleChange(e)}
               />
             </Form.Group>
           </div>
 
-          <Button variant="primary" type="submit" className="filter-Button">
+          <Button variant='primary' type='submit' className='filter-Button'>
             Filter
+          </Button>
+          <Button
+            variant='primary'
+            type='button'
+            className='filter-Button'
+            onClick={() => this.props.history.push("/")}>
+            ClearFilter
           </Button>
         </Form>
       </div>

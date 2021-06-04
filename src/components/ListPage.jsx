@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Row, Col, Pagination } from "react-bootstrap";
 import { Link, withRouter } from "react-router-dom";
+import SideFilter from "./SideFilter";
 class ListPage extends React.Component {
   render() {
     const count = this.props.products.length;

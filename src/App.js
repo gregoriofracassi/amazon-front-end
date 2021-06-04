@@ -33,12 +33,16 @@ const App = (props) => {
       <Route
         path="/addProduct"
         exact
-        render={(props) => <ProductForm formType="add" {...props} />}
+        render={(props) => (
+          <ProductForm formType="add" action="POST" {...props} />
+        )}
       />
       <Route
         path="/editProduct/:id"
         exact
-        render={(props) => <ProductForm formType="edit" {...props} />}
+        render={(props) => (
+          <ProductForm formType="edit" action="PUT" {...props} />
+        )}
       />
    </>
   )

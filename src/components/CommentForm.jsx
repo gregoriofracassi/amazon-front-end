@@ -1,16 +1,52 @@
 import React from "react"
 import { Form, Container, Row, Col, Button } from "react-bootstrap"
 
-class ProductForm extends React.Component {
-  state = {}
+class CommentForm extends React.Component {
+  state = {
+    comment: "",
+    rate: "",
+  }
+
+  handleChange = (e) => {
+    let id = e.target.id
+    this.setState({ [id]: e.target.value })
+  }
+
+  handleSubmit = async (e) => {
+    e.preventDefault()
+    console.log(this.state)
+    try {
+      const response = await fetch(
+        `http://localhost:3001/products/${this.props.productId}/comments`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(this.state),
+        }
+      )
+      if (response.ok) {
+        const data = await response.json()
+        console.log(data)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   render() {
     return (
       <Container>
-        <Form>
-          <Form.Group controlId="exampleForm.ControlSelect1">
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Group>
             <Form.Label>Rating</Form.Label>
-            <Form.Control as="select">
+            <Form.Control
+              id="rate"
+              as="select"
+              value={this.state.rate}
+              onChange={this.handleChange}
+            >
               <option>1</option>
               <option>2</option>
               <option>3</option>
@@ -18,9 +54,15 @@ class ProductForm extends React.Component {
               <option>5</option>
             </Form.Control>
           </Form.Group>
-          <Form.Group controlId="exampleForm.ControlTextarea1">
+          <Form.Group>
             <Form.Label>Comment</Form.Label>
-            <Form.Control as="textarea" rows={3} />
+            <Form.Control
+              as="textarea"
+              rows={3}
+              id="comment"
+              value={this.state.comment}
+              onChange={this.handleChange}
+            />
           </Form.Group>
           <Button variant="warning" className="mt-3" type="submit">
             Add review
@@ -31,4 +73,4 @@ class ProductForm extends React.Component {
   }
 }
 
-export default ProductForm
+export default CommentForm

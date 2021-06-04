@@ -44,19 +44,3 @@
 .pointer {
   cursor: pointer;
 }
-
-.price-container {
-  display: flex;
-}
-
-#priceRange1 {
-  margin-right: 10px;
-}
-#priceRange2 {
-  margin-left: 10px;
-}
-
-.filter-Button {
-  width: 100%;
-  margin-top: 15px;
-}

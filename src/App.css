@@ -40,3 +40,7 @@
 .side-text {
   font-size: 14px;
 }
+
+.pointer {
+  cursor: pointer;
+}

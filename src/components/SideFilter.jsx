@@ -83,10 +83,6 @@ class SideFilter extends Component {
               {this.state.uniqueBrands.map((elem) => {
                 return <option>{elem}</option>;
               })}
-              <option>iphone</option>
-              <option>samsung</option>
-              <option>nokia</option>
-              <option>sony</option>
             </Form.Control>
           </Form.Group>
 

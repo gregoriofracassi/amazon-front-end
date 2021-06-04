@@ -3,13 +3,15 @@ import "./App.css"
 import { BrowserRouter as Router, Route } from "react-router-dom"
 import ProductForm from "./components/ProductForm"
 import Header from "./components/Header"
-import AmListPage from "./components/AmListPage"
+import ProductPage from "./components/ProductPage"
+import ListPage from "./components/ListPage"
 
 const App = () => {
   return (
     <Router>
       <Header />
-      <Route exact path="/" component={AmListPage} />
+      <Route exact path="/" component={ListPage} />
+      <Route path="/product/:id" component={ProductPage} />
       <Route
         path="/addProduct"
         exact

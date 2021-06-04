@@ -22,7 +22,10 @@ class ListPage extends React.Component {
     return (
       <Container className='mt-4'>
         <Row>
-          <Col xs={2}></Col>
+          <Col xs={2}>
+            <SideFilter />
+          </Col>
+
           <Col xs={10}>
             {this.props.products.map((p) => {
               return (

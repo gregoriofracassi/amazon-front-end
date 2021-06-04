@@ -24,7 +24,7 @@ class ListPage extends React.Component {
       <Container className='mt-4'>
         <Row>
           <Col xs={2}>
-            <SideFilter products={this.state.products} />
+            <SideFilter products={this.props.products} />
           </Col>
 
           <Col xs={10}>

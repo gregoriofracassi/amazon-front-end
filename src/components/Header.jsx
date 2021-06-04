@@ -11,13 +11,9 @@ function Header(props) {
       props.onQueryChange(e.target.value);
       if (search) {
         console.log("props.location.search:", props.location.search);
-        props.history.push(
-          search + `&query=${e.target.value}&offset=0&limit=6`
-        );
+        props.history.push(search + `&query=${e.target.value}`);
       } else {
-        props.history.push(
-          props.match.path + `?query=${e.target.value}&offset=0&limit=6`
-        );
+        props.history.push(props.match.path + `?query=${e.target.value}`);
       }
     } else {
       props.history.push(props.match.path);

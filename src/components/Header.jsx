@@ -27,7 +27,7 @@ function Header(props) {
     if (
       !props.location.search.startsWith("?query") &&
       !props.location.search.includes("query")
-    ) {
+     ) {
       console.log("Tes");
       setSearch(props.location.search);
     }

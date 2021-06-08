@@ -4,7 +4,10 @@ import SideFilter from "./SideFilter.jsx";
 
 class ListPage extends React.Component {
   state = {
-    products: [],
+    products: [
+      { brand: "iphone", category: "phone" },
+      { brand: "sam", category: "laptop" },
+    ],
   };
 
   componentDidMount = async () => {

@@ -19,6 +19,17 @@ class ListPage extends React.Component {
     }
   }
 
+  cartTotal = () => {
+    const prices = []
+    if (this.state.user.carts) {
+      this.state.user.carts.forEach((cart) => {
+        prices.push(cart.product.price)
+      })
+      const summedPrices = prices.reduce((acc, curr) => acc + curr)
+      return summedPrices
+    }
+  }
+
   render() {
     return (
       <Container className="mt-5">
@@ -38,10 +49,14 @@ class ListPage extends React.Component {
                   </ListGroup.Item>
                 )
               })}
-            {/* {this.state.user.carts && this.state.user.carts.forEach} */}
-            <Button variant="warning" className="ml-auto mt-3">
-              Checkout
-            </Button>
+            <div className="mt-3 d-flex">
+              <div className="d-flex ml-auto">
+                <h5 className="mt-2">Total: € {this.cartTotal()}</h5>
+                <Button variant="warning" className="ml-4">
+                  Checkout
+                </Button>
+              </div>
+            </div>
           </ListGroup>
         </Card>
       </Container>

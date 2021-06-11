@@ -3,8 +3,10 @@ import { Form, Container, Row, Col, Button } from "react-bootstrap"
 
 class CommentForm extends React.Component {
   state = {
-    comment: "",
+    userId: 1,
+    review: 1,
     rate: "",
+    productId: parseInt(this.props.productId),
   }
 
   handleChange = (e) => {
@@ -13,19 +15,17 @@ class CommentForm extends React.Component {
   }
 
   handleSubmit = async (e) => {
+    this.props.handleChange()
     e.preventDefault()
     console.log(this.state)
     try {
-      const response = await fetch(
-        `http://localhost:3001/products/${this.props.productId}/comments`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(this.state),
-        }
-      )
+      const response = await fetch(`http://localhost:5000/api/reviews`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(this.state),
+      })
       if (response.ok) {
         const data = await response.json()
         console.log(data)
@@ -59,8 +59,8 @@ class CommentForm extends React.Component {
             <Form.Control
               as="textarea"
               rows={3}
-              id="comment"
-              value={this.state.comment}
+              id="review"
+              value={this.state.review}
               onChange={this.handleChange}
             />
           </Form.Group>

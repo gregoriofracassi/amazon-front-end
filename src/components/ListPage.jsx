@@ -8,13 +8,11 @@ class ListPage extends React.Component {
 
   componentDidMount = async () => {
     try {
-      let response = await fetch("http://localhost:3001/products")
+      let response = await fetch("http://localhost:5000/api/products/")
 
       if (response.ok) {
         let data = await response.json()
-        console.log(data)
-        this.setState({ products: data.products })
-        console.log(this.state.products)
+        this.setState({ products: data })
       }
     } catch (error) {
       console.log(error)
@@ -32,7 +30,7 @@ class ListPage extends React.Component {
                 <Container
                   key={p._id}
                   className="pointer my-2"
-                  onClick={() => this.props.history.push(`/product/${p._id}`)}
+                  onClick={() => this.props.history.push(`/product/${p.id}`)}
                 >
                   <Row>
                     <Col xs={2}>
@@ -41,7 +39,7 @@ class ListPage extends React.Component {
                     <Col xs={10}>
                       <h5>{p.name}</h5>
                       <p>{p.description}</p>
-                      <h4>{p.price}</h4>
+                      <h4>€ {p.price}</h4>
                     </Col>
                   </Row>
                   <hr></hr>

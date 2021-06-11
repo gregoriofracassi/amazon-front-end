@@ -5,6 +5,7 @@ import ProductForm from "./components/ProductForm"
 import Header from "./components/Header"
 import ProductPage from "./components/ProductPage"
 import ListPage from "./components/ListPage"
+import CartPage from "./components/CartPage"
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
       <Header />
       <Route exact path="/" component={ListPage} />
       <Route path="/product/:id" component={ProductPage} />
+      <Route path="/cart/:id" component={CartPage} />
       <Route
         path="/addProduct"
         exact
@@ -21,7 +23,6 @@ const App = () => {
       />
       <Route
         path="/editProduct/:id"
-        exact
         render={(props) => (
           <ProductForm formType="edit" action="PUT" {...props} />
         )}
